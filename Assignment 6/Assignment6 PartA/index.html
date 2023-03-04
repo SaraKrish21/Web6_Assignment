@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="./style.css">
+
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/additional-methods.js"></script> -->
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> -->
+
+    <!-- <script src="https://code.jquery.com/jquery-3.2.1.js"></script> -->
+</head>
+<title>Login Page</title>
+
+<body>
+    <h1>Already! have an Account, please Login In</h1>
+
+    <div class="container">
+
+        <form class="validationForm" id="loginForm" method="get" autocomplete="off">
+
+            <div class="form-outline mb-4">
+                <label class="form-label" for="formUserName">User Name</label>
+                <input type="text" id="username" name="username" class="form-control form-control-lg"
+                    placeholder="Enter a valid username" />
+                <span class="error_form" id="uname_error_message"></span>
+
+            </div>
+
+            <div class="form-outline mb-3">
+                <label class="form-label" for="formEmail">Email address</label>
+                <input type="email" id="emailId" name="emailId" class="form-control form-control-lg"
+                    placeholder="Enter a valid email address" />
+                <span class="error_form" id="email_error_message"></span>
+
+            </div>
+
+            <!-- Password input -->
+            <div class="form-outline mb-2">
+                <label class="form-label" for="formPassword">Password</label>
+                <input type="password" id="password" name="password" class="form-control form-control-lg"
+                    placeholder="Enter password" />
+                <span class="error_form" id="password_error_message"></span>
+
+            </div>
+
+            <button type="submit" class="submit btn-block">Log In</button>
+
+        </form>
+
+
+
+    </div>
+
+    <!-- <button type="submit" class="submit btn-block">Log In</button> -->
+
+
+
+    <script>
+        jQuery.validator.addMethod("specialChars", function (value, element) {
+            var regex = new RegExp("^[a-zA-Z0-9]+$");
+            var key = value;
+
+            if (!regex.test(key)) {
+                return false;
+            }
+            return true;
+        }, "Only alphanumerics allowed");
+
+        jQuery.validator.addMethod("specialCharsPassLow", function (value, element) {
+            var regex = new RegExp("^[a-z]");
+            var key = value;
+
+            if (!regex.test(key)) {
+                return false;
+            }
+            return true;
+        }, "Only small letters allowed");
+
+        jQuery.validator.addMethod("specialCharsPassUpper", function (value, element) {
+            var regex = new RegExp("^[A-Z]");
+            var key = value;
+
+            if (!regex.test(key)) {
+                return false;
+            }
+            return true;
+        }, "Only Capital letters allowed");
+
+        jQuery.validator.addMethod("checkOneLetter", function (value, element) {
+            var regex = /[a-zA-Z]/;
+            var key = value;
+            if (!regex.test(key)) {
+                return false;
+            }
+            return true;
+        }, "Enter at least 1 digit");
+
+        jQuery.validator.addMethod("checkDigits", function (value, element) {
+            var regex = /^(?=.*[0-9])/;
+            var key = value;
+            if (!regex.test(key)) {
+                return false;
+            }
+            return true;
+        }, "Enter at least 1 digit");
+
+        jQuery.validator.addMethod("checkSplChar", function (value, element) {
+            var regex = /^(?=.*[!@#$%^&*])/;
+            var key = value;
+            if (!regex.test(key)) {
+                return false;
+            }
+            return true;
+        }, "Enter at least 1 digit");
+
+        jQuery.validator.addMethod("checkUpper", function (value, element) {
+            var regex = /[A-Z]/;
+            var key = value;
+            if (!regex.test(key)) {
+                return false;
+            }
+            return true;
+        }, "Enter at least 1 digit");
+
+
+        jQuery.validator.addMethod("splmail", function (value, element) {
+            var regex = new RegExp("[a-zA-Z0-9._]+@northeastern.edu");
+            var key = value;
+
+            if (!regex.test(key)) {
+                return false;
+            }
+            return true;
+        }, "Only alphanumerics allowed");
+
+        jQuery.validator.addMethod("emailspl", function (value, element) {
+            var regex = new RegExp("^[a-zA-Z0-9._]+@northeastern.edu+$");
+            var key = value;
+
+            if (!regex.test(key)) {
+                return false;
+            }
+            return true;
+        }, "Only alphanumerics allowed");
+
+
+
+        $().ready(function () {
+            $("#loginForm").validate({
+                
+                rules: {
+                    username: {
+                        required: true,
+                        minlength: 5, //for length of name
+                        specialChars: true,
+                        checkOneLetter: true,
+                    },
+                    password: {
+                        required: true,
+                        minlength: 5,
+                        // specialChars: false
+                        // specialCharsPassLow:true,
+                        // specialCharsPassUpper : true
+                        checkDigits : true,
+                        checkSplChar: true,
+                        checkUpper: true,
+
+    
+                    },
+                    emailId: {
+                        required: true,
+                        email: true,
+                        splmail: true,
+                        emailspl: true
+                    },
+                },
+               
+                messages: {
+                    username: {
+                        required: " Please enter username",
+                        minlength: " Your username must consist of at least 5 characters",
+                        specialChars: "Username cannot have special characters",
+                        checkOneLetter: "Username should have atleast 1 alphabet"
+                        
+                    },
+                    password: {
+                        required: " Please enter password",
+                        minlength: " Your password must be consist of at least 5 characters",
+                        // specialChars: "Password should have special characters",
+                        // specialCharsPass: "Password should have special characters "
+                        // specialCharsPassLow: "hello",
+                        // specialCharsPassUpper: "Man",
+                        checkDigits:"Your password must contain at least 1 digit",
+                        checkSplChar: "Your password must contain at least 1 special character",
+                        checkUpper: "Your password must contain at least 1 upper case letter",
+
+                    },
+                    emailId: {
+                        required: "Please enter email",
+                        emailspl: "Email cannot have special characters",
+                        splmail: "Email can only be northeastern email",
+                        email: "Email not in correct format",
+                    },
+                },
+                submitHandler: function (form) {
+
+                    console.log("Hii");
+
+                   
+                    var usr = $("#username").val();
+                    localStorage.setItem("username", usr);
+                    window.open('simpleCalculator.html');
+                    form.submit();
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
